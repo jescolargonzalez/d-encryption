@@ -1,7 +1,77 @@
 import java.util.*;
 
 public class decryption {
-    //-------------------------MAPS------------------------------>>
+
+    char[] auxMsg;    // ** PRUEBAS ** | (variable auxiliar para la Conversion mensaje)
+
+//-------------------------RANDOM---MAPS-------PRINT---------->>
+    public static int randomCode(){
+        /** Max Value == 65537 **/
+        Random num = new Random();
+        int ran = num.nextInt(65537); // max valor
+        return ran;
+    }
+    public static Map<Character,Integer> randomMapValues() {
+        Map<Character, Integer> unicodeRandomMap = new HashMap<>();
+
+        System.err.println("- Caracteres del alfabeto en minúsculas:" );
+        for (char c = 'a'; c <= 'z'; c++) {
+            unicodeRandomMap.put(c, (int) c);
+//lo hacemos aleatoriamente
+            unicodeRandomMap.replace(c,randomCode());
+        }
+        System.err.println("- Caracteres del alfabeto en mayúsculas:" );
+        for (char c = 'A'; c <= 'Z'; c++) {
+            unicodeRandomMap.put(c, (int) c);
+//lo hacemos aleatoriamente
+            unicodeRandomMap.replace(c,randomCode());
+        }
+        System.err.println("- Caracteres del alfabeto numeros:" );
+        for (char c = '0'; c <= '9'; c++) {
+            unicodeRandomMap.put(c, (int) c);
+//lo hacemos aleatoriamente
+            unicodeRandomMap.replace(c,randomCode());
+        }
+//------------------->> Cambiar caracteres especiales TODO
+        System.out.println("- Caracteres especiales ñ y tildes:" );
+        unicodeRandomMap.put('ñ', (int) 'ñ');
+        unicodeRandomMap.put('Ñ', (int) 'Ñ');
+        unicodeRandomMap.put('á', (int) 'á');
+        unicodeRandomMap.put('é', (int) 'é');
+        unicodeRandomMap.put('í', (int) 'í');
+        unicodeRandomMap.put('ó', (int) 'ó');
+        unicodeRandomMap.put('ú', (int) 'ú');
+        unicodeRandomMap.put('Á', (int) 'Á');
+        unicodeRandomMap.put('É', (int) 'É');
+        unicodeRandomMap.put('Í', (int) 'Í');
+        unicodeRandomMap.put('Ó', (int) 'Ó');
+        unicodeRandomMap.put('Ú', (int) 'Ú');
+        System.out.println("- Caracteres especiales:" );
+        unicodeRandomMap.put('!', (int) '!');
+        unicodeRandomMap.put('¡', (int) '¡');
+        unicodeRandomMap.put('?', (int) '?');
+        unicodeRandomMap.put('¿', (int) '¿');
+        unicodeRandomMap.put('.', (int) '.');
+        unicodeRandomMap.put(',', (int) ',');
+        unicodeRandomMap.put(':', (int) ':');
+        unicodeRandomMap.put(';', (int) ';');
+        unicodeRandomMap.put('-', (int) '-');
+        unicodeRandomMap.put('_', (int) '_');
+        unicodeRandomMap.put('(', (int) '(');
+        unicodeRandomMap.put(')', (int) ')');
+        unicodeRandomMap.put('[', (int) '[');
+        unicodeRandomMap.put(']', (int) ']');
+        unicodeRandomMap.put('{', (int) '{');
+        unicodeRandomMap.put('}', (int) '}');
+        unicodeRandomMap.put('"', (int) '"');
+        unicodeRandomMap.put('\'', (int) '\'');
+        unicodeRandomMap.put('\\', (int) '\\');
+        unicodeRandomMap.put('/', (int) '/');
+        unicodeRandomMap.put('<', (int) '<');
+        unicodeRandomMap.put('>', (int) '>');
+
+        return unicodeRandomMap;
+    }
     public static Map<Character, Integer> getUnicode() {
         Map<Character, Integer> unicodeMap = new HashMap<>();
 
@@ -60,8 +130,22 @@ public class decryption {
 
         return unicodeMap;
     }
+    public static void printOriginal(){
+        System.out.println("Caracteres del map [ORIGINAL]:");
+        Map<Character, Integer> unicodeAlphabet = getUnicode();
+        for (Map.Entry<Character, Integer> entry : unicodeAlphabet.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+    public static void printRandom(){
+        System.err.println("Caracteres del map [RANDOM]:");
+        Map<Character, Integer> unicodeAlphabet = randomMapValues();
+        for (Map.Entry<Character, Integer> entry : unicodeAlphabet.entrySet()) {
+            System.err.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
 
-//------------------------------decryption---------------------------------------\\
+//------------------------------decryption--------------------------------------->>
     public static String cifrar(String mensaje, int clave) {
         StringBuilder cifrado = new StringBuilder();
         for (int i = 0; i < mensaje.length(); i++) {
@@ -80,28 +164,25 @@ public class decryption {
         }
         return descifrado.toString();
     }
- //><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><\\
+ //><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><\\ TODO
     public static String cifrarConMapa(String msg){
         StringBuilder cifrado = new StringBuilder();
 
 
         return cifrado.toString();
     }
-
-    public static String descifrarConMapa(String msg){
+    public static String descifrarConMapa(String msg) {
         StringBuilder descifrado = new StringBuilder();
 
 
         return descifrado.toString();
     }
-
-
-
+//><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><\\ TODO
 
 //------------------------------MENU---------------------------------------------\\
     public static void limpiarConsola(){
     for(int i =0;i<50;i++){
-        System.out.println("");
+        System.out.println(" ");
     }
 }
     public static void txtMenu(){
@@ -115,22 +196,18 @@ public class decryption {
         System.out.println("| 5 | -  Descifrar mensaje     |");
         System.out.println("| 6 | -  Ver clave Cifrado     |");
         System.out.println("| 7 | -  Cambiar clave Cifrado |");
-        System.out.println("| 8 | -  borrar msg            |");
-        System.out.println("| 9 | -  Ver mapa actual       |");
+        System.out.println("| 8 | -  Borrar msg            |");
+        System.out.println("| 9 | -  Ver mapas    [!]      |");
         System.out.println("| 0 | -  Salir                 |");
         System.out.println("*------------------------------*");
     }
     public static void menu() {
         Scanner sc = new Scanner(System.in);
-        int option = -1;      // Option elegida por usuario
-        String msg = null;     // Mensaje introducido por usuario
-        String xxx = null;   // Variable Aux para encriptar mensaje
-
+        int option;            // Option elegida por usuario
         boolean salir = false;
-        int clave = 1234;
-
-        char[] auxMsg;    // ** PRUEBAS ** | (variable auxiliar para la Conversion mensaje)
-
+        int clave = 1234;      // clave para cifrar mensajes
+        String msg = null;     // Mensaje introducido por usuario
+        String xxx = null;     // Variable Aux para encriptar mensaje
         do {
             txtMenu();
             try {
@@ -144,18 +221,19 @@ public class decryption {
                         System.out.println("Mensaje guardado correctamente.");
                     }
                     case 2 -> {
-                        if (!msg.isBlank()) {
+                        if (!msg.isBlank() ) {
                             System.out.println("Su mensaje es: " + msg);
                         } else {
-                            System.out.println("Utilice la opcion 1 para almacenar un mensaje.");
+                            System.err.println("Utilice la opcion 1 para almacenar un mensaje.");
                         }
                     }
                     case 3 -> {
-                        String mensajeCifrado = cifrar(msg, clave);
-                        String mensajeDescifrado = descifrar(mensajeCifrado, clave);
-                        System.out.println("Mensaje original: " + msg);
-                        System.out.println("Mensaje cifrado: " + mensajeCifrado);
-                        System.out.println("Mensaje descifrado: " + mensajeDescifrado);
+                        randomMapValues();
+//                        String mensajeCifrado = cifrar(msg, clave);
+//                        String mensajeDescifrado = descifrar(mensajeCifrado, clave);
+//                        System.out.println("Mensaje original: " + msg);
+//                        System.out.println("Mensaje cifrado: " + mensajeCifrado);
+//                        System.out.println("Mensaje descifrado: " + mensajeDescifrado);
                     }
                     case 4 -> {
                         if(msg == null){
@@ -187,41 +265,37 @@ public class decryption {
                         xxx = null;
                         System.out.println("Reset OK.");
                     }
-                    case 9 -> {
-//                        auxMsg = msg.toCharArray(); // Convertimos string a array de chars
-//                        if (!(auxMsg.length == 0)) {
-//                            System.out.println("Su array es: ");
-//                            imprimirArregloChar(auxMsg);
-//                        } else {
-//                            System.out.println("Utilice la opcion 1 para almacenar un mensaje.");
-//                        }
-                        //Imprimimos MAP con letras nums ,mayus y minus
-                        System.out.println("caracteres del map:");
-                        Map<Character, Integer> unicodeAlphabet = getUnicode();
-                        for (Map.Entry<Character, Integer> entry : unicodeAlphabet.entrySet()) {
-                            System.out.println(entry.getKey() + ": " + entry.getValue());
+                    case 9 -> {//
+                        //Imprimimos MAP's con letras nums ,mayus y minus
+                        System.out.println("· Introduzca 1 para ver mapa original.");
+                        System.out.println("· Introduzca cualquier tecla para ver nuevo mapa aleatorio.");
+                        int auxOpt = sc.nextInt();
+                        if(auxOpt==1){
+                            printOriginal();
+                        }else{
+                            printRandom();
                         }
+
                     }
                     case 0 -> salir = true;
                     default -> {
-                        System.out.println("Solo números mostrados en pantalla.");
+                        System.err.println("Solo números mostrados en pantalla.");
+                        System.err.println("Introduce numero de nuevo..");
                         sc.next(); // Limpiar buffer scanner
                         limpiarConsola();
                         txtMenu();
                     }
                 }
             } catch (InputMismatchException e) {
-                System.out.println("ERROR HUMANO");
-                System.out.println("Debes insertar un número");
-                System.out.println("Introduzca cualquier tecla para continuar...");
+                System.err.println("ERROR HUMANO");
+                System.err.println("Debes insertar un número");
+                System.err.println("Introduzca cualquier tecla para continuar...");
                 sc.next(); // Limpiar buffer scanner
                 sc.next();
                 limpiarConsola();
-                txtMenu();
             }
         } while (!salir);
     }
-
 //--------------------------TEST-------------------------------------------------\\
     public static void imprimirArregloChar(char[] mensaje){
         for(int i =0;i< mensaje.length;i++){
@@ -230,7 +304,8 @@ public class decryption {
     }
 
 
-// ·||||      EJECUCION PROGRAMA!     · \\
+
+// ·|||| ·        EJECUCION PROGRAMA!        · |||| · \\
     public static void main(String[] args) {
         menu();
     }
